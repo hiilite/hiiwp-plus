@@ -41,6 +41,7 @@ function add_teams_shortcode( $atts ){
 		'carousel',
 		vc_shortcode_custom_css_class( $css ), 
 	);
+	
 	if (vc_shortcode_custom_css_has_property( $css, array('border', 'background') )) {
 		$css_classes[]='';
 	}
@@ -64,9 +65,10 @@ function add_teams_shortcode( $atts ){
 		$data_attributes_str .= "data-$key='$value' ";
 	}
 	$wrapper_attributes[] = $data_attributes_str;
-	
+
 	$wrapper_attributes[] = 'class="' . esc_attr( trim( $css_class ) ) . '"';
-		
+
+	$cur_page = get_page_template();
 	
 	// Build Query
 	if($section != 'all'){
@@ -82,7 +84,13 @@ function add_teams_shortcode( $atts ){
 				),
 		    )
 		);
-	} else {
+	} elseif ($is_slider) {
+		$query = new WP_Query( array(
+			'post_type' => $teams_slug,
+			'post__not_in' => $get_the_ID()
+		));
+	} 
+	else {
 		$query = new WP_Query(array('post_type' => $teams_slug));
 	}
 

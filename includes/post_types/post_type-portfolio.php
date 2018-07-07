@@ -69,13 +69,7 @@ if($hiilite_options['portfolio_on']):
 	register_taxonomy( 
 	    $tax_slug, 
 	    $slug, 
-	    array( 
-	        'hierarchical'  => false, 
-	        'label'         => __( 'Tags', 'hiiwp' ), 
-	        'singular_name' => __( 'Tag', 'hiiwp' ), 
-	        'rewrite'       => array( 'slug' => $tax_slug, 'with_front' => false ), 
-	        'query_var'     => true 
-	    )  
+	    $args  
 	);
 	
 	register_taxonomy( $tax_slug, array( $slug ), $args );

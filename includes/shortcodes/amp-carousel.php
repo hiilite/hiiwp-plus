@@ -9,23 +9,24 @@ function add_amp_carousel_shortcode( $atts ){
 
 	$slug = get_theme_mod( 'portfolio_slug', 'portfolio' );
 	extract( shortcode_atts( array(
-      'args'  => null,
-      'height' => 300,
-      'width'	=> 1000,
-      'type'	=> 'carousel',
-      'thumbnails'	=> false,
-      'media_grid_images' => null,
-      'css' => '',
-      'id'	=> '',
-      'show_arrows'	=> 'true',
-      'hide_arrows_on_mobile' => false,
-      'arrow_icon'	=> 'chevron',
-      'arrow_size'	=> 'regular',
-      'arrow_background_type'	=> 'none',
-      'arrow_color'	=> '#333333',
-      'arrow_background_color'	=> '#ffffff',
-      'show_bullets'	=> 'true',
-      'bullet_color'	=> '#ffffff',
+      'args'  				=> null,
+      'height' 				=> 300,
+      'width'				=> 1000,
+      'type'				=> 'carousel',
+      'thumbnails'			=> false,
+      'media_grid_images' 	=> null,
+      'columns'				=> 'col-4',
+      'css' 				=> '',
+      'id'					=> '',
+      'show_arrows'			=> 'true',
+      'hide_arrows_on_mobile'=> false,
+      'arrow_icon'			=> 'chevron',
+      'arrow_size'			=> 'regular',
+      'arrow_background_type'=> 'none',
+      'arrow_color'			=> '#333333',
+      'arrow_background_color'=> '#ffffff',
+      'show_bullets'		=> 'true',
+      'bullet_color'		=> '#ffffff',
     ), $atts ) );
     
     $id = ($id != '')?"id={$id}":"id='hii_rc_".rand(100,999)."'";
@@ -67,7 +68,7 @@ function add_amp_carousel_shortcode( $atts ){
 			$count++;
 	       $image = wp_get_attachment_image_src( $attachment->ID, 'full' );
 	       $hratio = ((int) $height / (int) $image[2]);
-	       $output .= '<div class="slide" style="width:'.($image[1]*$hratio).'px;height:'.$height.'px;">';
+	       $output .= "<div class='slide {$columns}' style='width:".($image[1]*$hratio)."px;height:{$height}px;'>";
 		   $output .= '<img src="'.$image[0].'" width="'.($image[1]*$hratio).'" height="'.($image[2]*$hratio).'"  alt="'.get_the_title().'">';
 		   $output .= '</div>';
 	    endforeach;
