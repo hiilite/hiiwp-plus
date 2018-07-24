@@ -87,7 +87,7 @@ function add_teams_shortcode( $atts ){
 	} elseif ($is_slider) {
 		$query = new WP_Query( array(
 			'post_type' => $teams_slug,
-			'post__not_in' => $get_the_ID()
+			'post__not_in' => get_the_ID()
 		));
 	} 
 	else {
@@ -108,7 +108,7 @@ function add_teams_shortcode( $atts ){
 	    ob_start();
 	    while($query->have_posts()){
 		    $query->the_post();
-		    $post_id = get_the_id();
+		    $post_id = get_the_ID();
 		    include( $templates->locate_template('team-loop.php') ); 
 	    }
 	    $output .= ob_get_clean();
@@ -123,5 +123,3 @@ function add_teams_shortcode( $atts ){
 	return $output;
 }
 add_shortcode( 'teams', 'add_teams_shortcode' );
-	
-	?>
