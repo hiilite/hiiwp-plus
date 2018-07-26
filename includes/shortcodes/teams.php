@@ -84,19 +84,18 @@ function add_teams_shortcode( $atts ){
 				),
 		    )
 		);
-	} elseif ($is_slider) {
-		$query = new WP_Query( array(
-			'post_type' => $teams_slug,
-			'post__not_in' => get_the_ID()
-		));
-	} 
+	}  
 	else {
 		$query = new WP_Query(array('post_type' => $teams_slug));
+		
 	}
-
+	
     if($query->have_posts()){
-	     $templates	= new HiiWP_Plus_Template_Loader();
 	    
+	    $templates	= new HiiWP_Plus_Template_Loader();
+	     
+	    $attributes = implode( ' ', $wrapper_attributes );
+	   
 	    // if slider
 	    if($is_slider):
 	    	$output .= '<amp-carousel width="'.$width.'px" layout="responsive" type="carousel" '.implode( ' ', $wrapper_attributes ).' '.$id.'';
