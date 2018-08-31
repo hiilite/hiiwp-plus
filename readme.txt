@@ -33,15 +33,11 @@ Installing "HiiWP Plus" can be done either by searching for "HiiWP Plus" via the
 
 We encourage everyone to contribute their ideas, thoughts and code snippets. This can be done by forking the [repository over at GitHub](http://github.com/hiilite/hiiwp-plus/).
 
-== Screenshots ==
-
-1. The settings screen.
-
 
 == Upgrade Notice ==
 
-= 1.0.0 =
-* Initial release. Woo!
+= 1.0.1 =
+* Added On-Click option to buttons.
 
 == Changelog ==
 

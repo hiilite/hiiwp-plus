@@ -3,7 +3,7 @@
  * Plugin Name: HiiWP Plus
  * Plugin URI: https://github.com/hiilite/hiiwp-plus
  * Description: Add a portfolio to your HiiWP Theme.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Peter Vigilante
  * Author URI: https://hiilite.com/
  * Requires at least: 4.0.0
@@ -128,7 +128,7 @@ final class HiiWP_Plus {
 		$this->token 			= 'hiiwp-plus';
 		$this->plugin_url 		= plugin_dir_url( __FILE__ );
 		$this->plugin_path 		= plugin_dir_path( __FILE__ );
-		$this->version 			= '1.0.0';
+		$this->version 			= '1.0.1';
 
 		// Admin - Start
 		require_once( 'includes/class-hiiwp-plus-settings.php' );

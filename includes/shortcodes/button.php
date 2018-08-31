@@ -1,4 +1,10 @@
 <?php
+/**
+ * Returns the output of a Hii Button shortcode
+ *
+ * @since  1.0.1
+ * @return object Button
+ */
 function add_button_shortcode( $atts ){
 	global $qode_options_proya;
 	$is_vc = (class_exists('Vc_Manager'))?true:false;
@@ -14,7 +20,8 @@ function add_button_shortcode( $atts ){
       'button_id'	=> '',
       'button_align'	=> '',
       'color'			=> '',
-      'use_google_font' => false
+      'use_google_font' => false,
+      'on_click'		=> '',
    );
    //print_r($atts);
    extract( shortcode_atts( $args, $atts ) );
@@ -80,6 +87,10 @@ function add_button_shortcode( $atts ){
 		} 
 	} 
 	
+	if($on_click != ''){
+		$wrapper_attributes[] = 'onclick="'. $on_click .'"';
+	}
+	
 	
 	$align_start = ($button_align != '')?'<div class="'.$button_align.'">':'';
 	$align_end = ($button_align != '')?'</div>':'';
@@ -87,4 +98,3 @@ function add_button_shortcode( $atts ){
 }
 add_shortcode( 'button', 'add_button_shortcode' );
 	
-	?>
