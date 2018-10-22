@@ -1,10 +1,16 @@
 <?php
+/**
+ * HiiWP: Amp Carousel Shortcode
+ *
+ * Output the shortcode for the AMP Carousel
+ *
+ * @package     hiiwp
+ * @copyright   Copyright (c) 2018, Peter Vigilante
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0.1
+ */
 function add_amp_carousel_shortcode( $atts ){
 	
-	/*
-		TODO:
-
-	*/
 	$post_id = get_the_id();
 
 	$slug = get_theme_mod( 'portfolio_slug', 'portfolio' );
@@ -17,6 +23,7 @@ function add_amp_carousel_shortcode( $atts ){
       'media_grid_images' 	=> null,
       'columns'				=> 'col-4',
       'css' 				=> '',
+      'item_css'			=> '',
       'id'					=> '',
       'show_arrows'			=> 'true',
       'hide_arrows_on_mobile'=> false,
@@ -30,22 +37,57 @@ function add_amp_carousel_shortcode( $atts ){
     ), $atts ) );
     
     $id = ($id != '')?"id={$id}":"id='hii_rc_".rand(100,999)."'";
-    /*
-	VC CSS    
-	*/
+    /**
+	 *	WPB Container CSS Classes
+	 */
 	$extra_class = ($type == 'slides')?'slider':'carousel';
 	$extra_class .= ($thumbnails)?' has_thumbs':'';
     $css_classes = array(
 		$extra_class,
-		vc_shortcode_custom_css_class( $css ), 
+		vc_shortcode_custom_css_class( $css ),
 	);
 	if (vc_shortcode_custom_css_has_property( $css, array('border', 'background') )) {
 		$css_classes[]='';
 	}
 	$wrapper_attributes = array();
 	$css_class = preg_replace( '/\s+/', ' ', apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, implode( ' ', array_filter( $css_classes ) ), '.vc_custom_', $atts ) );
+	
+	
+	/* Arrow & Bullet Attributes*/
+	$data_attributes_str = '';
+	$data_attributes = array(
+		'show_arrows'			=> $show_arrows,
+		'arrow_icon' 			=> $arrow_icon,
+		'hide_arrows_on_mobile'	=> $hide_arrows_on_mobile,
+		'arrow_size' 			=> $arrow_size,
+		'arrow_background_type' => $arrow_background_type,
+		'arrow_color' 			=> $arrow_color,
+		'arrow_background_color'=> $arrow_background_color,
+		'show_bullets' 			=> $show_bullets,
+		'bullet_color' 			=> $bullet_color,
+	);
+	foreach($data_attributes as $key=>$value) {
+		$data_attributes_str .= "data-$key='$value' ";
+	}
+	$wrapper_attributes[] = $data_attributes_str;
+	
 	$wrapper_attributes[] = 'class="' . esc_attr( trim( $css_class ) ) . '"';
-		
+	/**
+	 *	WPB Individual Item CSS Classes
+	 */
+	$item_wrapper_attributes = array();
+	$item_css_classes = array( 
+		'slide',
+		$columns,
+		vc_shortcode_custom_css_class( $item_css ) 
+	);
+	if (vc_shortcode_custom_css_has_property( $item_css, array('border', 'background') )) { $item_css_classes[]=''; }
+	$item_css_class = preg_replace( '/\s+/', ' ', apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, implode( ' ', array_filter( $item_css_classes ) ), '.vc_custom_', $atts ) );
+	$item_wrapper_attributes[] = 'class="' . esc_attr( trim( $item_css_class ) ) . '"';
+	
+	/**
+	 *	Post Args
+	 */
     $args = ($args==null)?array('post_type'=>$slug,'posts_per_page'=> -1,'nopaging'=>true,'order'=>'ASC','orderby'=>'menu_order'):$args;
     if($media_grid_images != null){
 	    $args = array(
@@ -64,11 +106,12 @@ function add_amp_carousel_shortcode( $atts ){
     if($type == 'carousel') $output .= '<div class="carousel-wrapper">';
     if($args['post_type'] == 'attachment'):
     	$count = 0;
+    	
 		foreach ( $query->posts as $attachment) :
 			$count++;
 	       $image = wp_get_attachment_image_src( $attachment->ID, 'full' );
 	       $hratio = ((int) $height / (int) $image[2]);
-	       $output .= "<div class='slide {$columns}' style='width:".($image[1]*$hratio)."px;height:{$height}px;'>";
+	       $output .= "<div ".implode( ' ', $item_wrapper_attributes )." style='width:".($image[1]*$hratio)."px;height:{$height}px;'>";
 		   $output .= '<img src="'.$image[0].'" width="'.($image[1]*$hratio).'" height="'.($image[2]*$hratio).'"  alt="'.get_the_title().'">';
 		   $output .= '</div>';
 	    endforeach;
@@ -92,7 +135,7 @@ function add_amp_carousel_shortcode( $atts ){
 			if ( has_post_thumbnail() ) {
 				$image = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_id() ), 'large' );
 				$hratio = ($height / $image[2]);
-				$output .= '<a href="'.get_the_permalink().'" class="slide">';
+				$output .= '<a href="'.get_the_permalink().'" '.implode( ' ', $item_wrapper_attributes ).'>';
 				$output .= '<img src="'.$image[0].'" width="'.($image[1]*$hratio).'" height="'.($image[2]*$hratio).'" alt="'.get_the_title().'">';
 				$output .= '</a>';
 		  	}
