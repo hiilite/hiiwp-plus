@@ -1,5 +1,14 @@
 <?php
+/* HiiWP Plus: portfolio shortcode
+ *
+ * @package     hiiwp
+ * @copyright   Copyright (c) 2018, Peter Vigilante
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since       1.0.3
+ */
 function add_portfolio_shortcode( $atts ){
+	global $wp_query;
+	$hiilite_options = HiiWP::get_options();
 	$portfolio_slug = get_theme_mod( 'portfolio_slug', 'portfolio' );
 	$portfolio_tax_slug = get_theme_mod( 'portfolio_tax_slug', 'work' );
 
@@ -31,7 +40,8 @@ function add_portfolio_shortcode( $atts ){
       'show_bullets'			=> 'true',
       'bullet_color'			=> '#ffffff',
       'slider_min_height' 		=> 100,
-      'autoplay'     			=> 'none'
+      'autoplay'     			=> 'none',
+      'portfolio_layout'		=> $hiilite_options['portfolio_layout']
    ), $atts ) );
 	
 
@@ -42,6 +52,8 @@ function add_portfolio_shortcode( $atts ){
 	$css_classes = array(
 		'portfolio-slider',
 		'carousel',
+		$portfolio_image_style,
+		'columns-'.$portfolio_columns,
 		vc_shortcode_custom_css_class( $css ), 
 	);
 	if (vc_shortcode_custom_css_has_property( $css, array('border', 'background') )) {
@@ -94,12 +106,11 @@ function add_portfolio_shortcode( $atts ){
     if($query->have_posts()){
 	    $templates	= new HiiWP_Plus_Template_Loader();
 	    
-	    // if slider
 	    if($is_slider):
 	    	$output .= '<amp-carousel width="'.$width.'px" layout="responsive" type="carousel" '.implode( ' ', $wrapper_attributes ).' '.$id.'';
 	    	$output .= ( isset($atts['autoplay']) && $atts['autoplay'] != 'none')?' autoplay delay="'.$atts['autoplay'].'000">':'>';
 	    else:
-	    	$output .= '<div class="container_inner">';
+	    	$output .= "<div class='row portfolio_layout {$portfolio_layout} columns-{$portfolio_columns} {$portfolio_image_style}'>";
 	    endif;
 	    ob_start();
 	    while($query->have_posts()){
@@ -114,7 +125,7 @@ function add_portfolio_shortcode( $atts ){
 	    	$output .= '</div>';
 	    endif;
 	}
-    
+    wp_reset_query();
 	return $output;
 }
 add_shortcode( 'portfolio', 'add_portfolio_shortcode' );
