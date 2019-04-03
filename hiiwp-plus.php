@@ -120,7 +120,7 @@ final class HiiWP_Plus {
 	/**
 	 * Constructor function.
 	 * @access  public
-	 * @since   1.0.0
+	 * @since   1.0.4
 	 */
 	
 	public function __construct () {
@@ -128,7 +128,7 @@ final class HiiWP_Plus {
 		$this->token 			= 'hiiwp-plus';
 		$this->plugin_url 		= plugin_dir_url( __FILE__ );
 		$this->plugin_path 		= plugin_dir_path( __FILE__ );
-		$this->version 			= '1.0.3';
+		$this->version 			= '1.0.4';
 
 		// Admin - Start
 		require_once( 'includes/class-hiiwp-plus-settings.php' );
