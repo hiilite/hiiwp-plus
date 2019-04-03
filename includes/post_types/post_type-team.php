@@ -8,7 +8,7 @@ if($hiilite_options['teams_on']):
 	$tax_title = get_theme_mod( 'team_tax_title', 'Position' );
 	$tax_slug = get_theme_mod( 'team_tax_slug', 'position' );
 	
-	$labels = array(
+	$labels = apply_filters( 'team_post_type_labels', array(
 		'name'               => sprintf(_x( '%s', 'post type general name', 'hiiwp' ), $title ),
 		'singular_name'      => sprintf(_x( '%s Member', 'post type singular name', 'hiiwp' ), $title ),
 		'menu_name'          => sprintf(_x( '%s', 'admin menu', 'hiiwp' ), $title), 
@@ -23,9 +23,9 @@ if($hiilite_options['teams_on']):
 		'parent_item_colon'  => sprintf(__( 'Parent %s Member:', 'hiiwp' ), $title ),
 		'not_found'          => sprintf(__( 'No %s Members found.', 'hiiwp' ), $title ),
 		'not_found_in_trash' => sprintf(__( 'No %s Members found in Trash.', 'hiiwp' ), $title )
-	);
+	));
 
-	$args = array(
+	$args = apply_filters( 'team_post_type_args', array(
 		'labels'             => $labels,
                 'description'        => __( 'Description.', 'hiiwp' ),
 		'public'             => true,
@@ -40,13 +40,13 @@ if($hiilite_options['teams_on']):
 		'menu_position'      => 7,
 		'menu_icon'			 => 'dashicons-groups',
 		'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt' )
-	);
+	));
 
 	register_post_type( 'team', $args );
 	
 	
 	// Add new taxonomy, make it hierarchical (like categories)
-    $labels = array(
+    $labels = apply_filters( 'team_tax_labels', array(
         'name'              => sprintf(_x( '%s', 'taxonomy general name', 'hiiwp' ), $tax_title ),
         'singular_name'     => sprintf(_x( '%s', 'taxonomy singular name', 'hiiwp' ), $tax_title ),
         'search_items'      => sprintf(__( 'Search %s', 'hiiwp' ), $tax_title ),
@@ -58,16 +58,16 @@ if($hiilite_options['teams_on']):
         'add_new_item'      => sprintf(__( 'Add New %s', 'hiiwp' ), $tax_title ),
         'new_item_name'     => sprintf(__( 'New %s Name', 'hiiwp' ), $tax_title ),
         'menu_name'         => sprintf(__( '%s', 'hiiwp' ), $tax_title )
-    );
+    ));
  
-    $args = array(
+    $args = apply_filters( 'team_tax_args', array(
         'hierarchical'      => true,
         'labels'            => $labels,
         'show_ui'           => true,
         'show_admin_column' => true,
         'query_var'         => true,
         'rewrite'           => array( 'slug' => $tax_slug, 'with_front' => false ),
-    );
+    ));
  
     register_taxonomy( $tax_slug, array( $slug ), $args );
 endif;

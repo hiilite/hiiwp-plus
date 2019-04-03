@@ -14,7 +14,7 @@ if($hiilite_options['menus_on']):
 	$menu_tax_slug = get_theme_mod( 'menu_tax_slug', 'menu-section' );
 
 
-	$labels = array(
+	$labels = apply_filters( 'menu_post_type_labels', array(
 		'name'               => sprintf(_x('%s', 'restaurant menu', 'hiiwp'), $title),
 		'singular_name'      => sprintf(_x('%s Item', 'post type singular name', 'hiiwp'), $title ),
 		'menu_name'          => sprintf(_x('%s', 'admin food menu', 'hiiwp'), $title ),
@@ -29,9 +29,9 @@ if($hiilite_options['menus_on']):
 		'parent_item_colon'  => sprintf(__( "Parent %s Item:", 'hiiwp' ), $title ),
 		'not_found'          => sprintf(__( "No %s items found.", 'hiiwp' ), $title ),
 		'not_found_in_trash' => sprintf(__( "No %s items found in Trash.", 'hiiwp' ), $title )
-	);
+	));
 
-	$args = array(
+	$args = apply_filters( 'mwnu_post_type_args', array(
 		'labels'             => $labels,
         'description'        => __( 'Description.', 'hiiwp' ),
 		'public'             => true,
@@ -46,13 +46,13 @@ if($hiilite_options['menus_on']):
 		'menu_position'      => 7,
 		'menu_icon'			 => 'dashicons-carrot',
 		'supports'           => array( 'title','thumbnail','editor'),
-	);
+	));
 
 	register_post_type( $menu_slug, $args );
 	
 	
 	// Register Taxonomy
-    $labels = array(
+    $labels = apply_filters( 'menu_tax_labels', array(
         'name'              => sprintf(_x( '%s', 'taxonomy general name', 'hiiwp' ), $tax_title ),
         'singular_name'     => sprintf(_x( '%s', 'taxonomy singular name', 'hiiwp' ), $tax_title ),
         'search_items'      => sprintf(__( 'Search %s', 'hiiwp' ), $tax_title ),
@@ -64,16 +64,16 @@ if($hiilite_options['menus_on']):
         'add_new_item'      => sprintf(__( 'Add New %s', 'hiiwp' ), $tax_title ),
         'new_item_name'     => sprintf(__( 'New %s Name', 'hiiwp' ), $tax_title ),
         'menu_name'         => sprintf(__( '%s', 'hiiwp' ), $tax_title ),
-    );
+    ));
  
-    $args = array(
+    $args = apply_filters( 'menu_tax_args', array(
         'hierarchical'      => true,
         'labels'            => $labels,
         'show_ui'           => true,
         'show_admin_column' => true,
         'query_var'         => true,
         'rewrite'           => array( 'slug' => $menu_tax_slug, 'with_front' => false ),
-    );
+    ));
  
     register_taxonomy( $menu_tax_slug, array( $menu_slug ), $args );
     

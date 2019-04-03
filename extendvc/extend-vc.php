@@ -766,13 +766,6 @@ if($hiilite_options['teams_on']):
 			array(
 				"type" => "checkbox",
 				"holder" => "div",
-				"heading" => "Show Rating",
-				"param_name" => "show_rating",
-				"value" => true,
-			),
-			array(
-				"type" => "checkbox",
-				"holder" => "div",
 				"heading" => "Is Slider",
 				"param_name" => "is_slider",
 				"value" => true,

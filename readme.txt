@@ -3,7 +3,7 @@ Contributors: Hiilite
 Tags: portfolio, hiiwp
 Requires at least: 4.0.0
 Tested up to: 4.4.2
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 HiiWP Plus  - WordPress plugin
@@ -35,6 +35,9 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 
 
 == Upgrade Notice ==
+= 1.0.4 =
+* Added filters for post types
+
 = 1.0.3 =
 * Changes to Portfolio shortcodes to match new template standard in HiiWP theme
 

@@ -1,6 +1,9 @@
 # HiiWP Plus
 
 ### Change log
+#### v1.0.4
+- Fixes to Post type args
+
 #### v1.0.3
 - Changes to Portfolio shortcodes to match new template standard in HiiWP theme
 

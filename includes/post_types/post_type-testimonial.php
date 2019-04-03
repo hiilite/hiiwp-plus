@@ -8,7 +8,7 @@ if($hiilite_options['testimonials_on'] == true):
 	$testimonials_tax_slug = $hiilite_options[ 'testimonials_tax_slug' ];
 	
 	
-	$labels = array( 
+	$labels = apply_filters( 'testimonial_post_type_labels', array( 
 		'name'               => sprintf(_x( '%s', 'testimonials', 'hiiwp' ), $title ),
 		'singular_name'      => sprintf(_x( '%s Item', 'post type singular name', 'hiiwp' ), $title ),
 		'menu_name'          => sprintf(_x( '%s', 'admin menu', 'hiiwp' ), $title ),
@@ -23,9 +23,9 @@ if($hiilite_options['testimonials_on'] == true):
 		'parent_item_colon'  => sprintf(__( "Parent %s Item:", 'hiiwp' ), $title ),
 		'not_found'          => sprintf(__( "No %s items found.", 'hiiwp' ), $title ),
 		'not_found_in_trash' => sprintf(__( "No %s items found in Trash.", 'hiiwp' ), $title )
-	);
+	));
 	
-	$args = array(
+	$args = apply_filters( 'testimonial_post_type_args', array(
 		'labels'             => $labels,
 	    'description'        => __( 'Description.', 'hiiwp' ),
 		'public'             => true,
@@ -40,13 +40,13 @@ if($hiilite_options['testimonials_on'] == true):
 		'menu_position'      => 7,
 		'menu_icon'			 => 'dashicons-format-quote',
 		'supports'           => array( 'title','thumbnail','editor'),
-	);
+	));
 	
 	register_post_type( $testimonials_slug, $args );
 	
 	
 	// Register Taxonomy
-	$labels = array(
+	$labels = apply_filters( 'testimonial_tax_labels', array(
 	    'name'              => sprintf(_x( "%s", 'taxonomy general name', 'hiiwp' ), $tax_title ),
 	    'singular_name'     => sprintf(_x( "%s", 'taxonomy singular name', 'hiiwp' ), $tax_title ),
 	    'search_items'      => sprintf(__( "Search %s", 'hiiwp' ), $tax_title ),
@@ -58,16 +58,16 @@ if($hiilite_options['testimonials_on'] == true):
 	    'add_new_item'      => sprintf(__( "Add New %s", 'hiiwp' ), $tax_title ),
 	    'new_item_name'     => sprintf(__( "New %s Name", 'hiiwp' ), $tax_title ),
 	    'menu_name'         => sprintf(__( "%s", 'hiiwp' ), $tax_title ),
-	);
+	));
 	
-	$args = array(
+	$args = apply_filters( 'testimonial_tax_args', array(
 	    'hierarchical'      => true,
 	    'labels'            => $labels,
 	    'show_ui'           => true,
 	    'show_admin_column' => true,
 	    'query_var'         => true,
 	    'rewrite'           => array( 'slug' => $testimonials_tax_slug, 'with_front' => false ),
-	);
+	));
 	
 	register_taxonomy( $testimonials_tax_slug, array( $testimonials_slug ), $args );
 	
